@@ -26,6 +26,7 @@ export interface Detection {
   timestamp: Date;
   position: Coordinate;
   severity: 'CRITICAL' | 'HIGH' | 'MEDIUM' | 'LOW';
+  imageUrl: string;
 }
 
 export interface Task {
@@ -52,6 +53,17 @@ interface SimulationState {
 
 const INITIAL_CENTER: Coordinate = [17.3850, 78.4867]; // Hyderabad
 
+// MAPPING DISEASES TO REAL IMAGES
+export const DISEASE_IMAGES: Record<string, string> = {
+  "Early Blight": "https://images.unsplash.com/photo-1599839619722-39751411ea63?q=80&w=600&auto=format&fit=crop",
+  "Late Blight": "https://images.unsplash.com/photo-1622383563227-04401ab4e5ea?q=80&w=600&auto=format&fit=crop",
+  "Leaf Mold": "https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?q=80&w=600&auto=format&fit=crop",
+  "Spider Mites": "https://images.unsplash.com/photo-1588602283944-18002df35222?q=80&w=600&auto=format&fit=crop",
+  "Powdery Mildew": "https://images.unsplash.com/photo-1611078712760-4966606fbcf0?q=80&w=600&auto=format&fit=crop",
+  "Aphid Cluster": "https://images.unsplash.com/photo-1621505353528-9842a24bc1ff?q=80&w=600&auto=format&fit=crop",
+  "Healthy": "https://images.unsplash.com/photo-1550986518-e2168305eb41?q=80&w=600&auto=format&fit=crop"
+};
+
 const generateRandomCoord = (center: Coordinate, offset: number): Coordinate => {
   return [
     center[0] + (Math.random() - 0.5) * offset,
@@ -69,8 +81,8 @@ export const useSimulation = create<SimulationState>((set) => ({
     id: 'R1', battery: 90, status: 'Idle', zone: 'Base', position: generateRandomCoord(INITIAL_CENTER, 0.005)
   },
   detections: [
-    { id: 'det-1', disease: 'Early Blight', confidence: 0.94, zone: '4A', timestamp: new Date(Date.now() - 60000), position: generateRandomCoord(INITIAL_CENTER, 0.008), severity: 'HIGH' },
-    { id: 'det-2', disease: 'Healthy', confidence: 0.98, zone: '4A', timestamp: new Date(Date.now() - 120000), position: generateRandomCoord(INITIAL_CENTER, 0.008), severity: 'LOW' }
+    { id: 'det-1', disease: 'Early Blight', confidence: 0.94, zone: '4A', timestamp: new Date(Date.now() - 60000), position: generateRandomCoord(INITIAL_CENTER, 0.008), severity: 'HIGH', imageUrl: DISEASE_IMAGES["Early Blight"] },
+    { id: 'det-2', disease: 'Healthy', confidence: 0.98, zone: '4A', timestamp: new Date(Date.now() - 120000), position: generateRandomCoord(INITIAL_CENTER, 0.008), severity: 'LOW', imageUrl: DISEASE_IMAGES["Healthy"] }
   ],
   tasks: [
     { id: 'task-1', title: 'Spot Spray — Early Blight', status: 'Pending', zone: '4A', priority: 'HIGH' },

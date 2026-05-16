@@ -1,3 +1,12 @@
+import os
+import textwrap
+
+def create_file(path, content):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w') as f:
+        f.write(textwrap.dedent(content).strip())
+
+create_file("app/page.tsx", """
 'use client';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -69,10 +78,10 @@ export default function Home() {
               <div className="w-48 h-16 glass-card rounded-full flex items-center justify-center shadow-[0_0_30px_rgba(82,183,136,0.2)] animate-float mb-32 z-20">
                 <Radar className="text-accent-green mr-2" /> <span className="font-bold text-foreground">Drone D1</span>
               </div>
-
+              
               {/* Animated scan beam */}
               <div className="absolute top-[200px] w-0 h-0 border-l-[100px] border-l-transparent border-r-[100px] border-r-transparent border-b-[200px] border-b-accent-green/20 animate-pulse-slow blur-sm z-10" />
-
+              
               <div className="w-56 h-20 glass-card rounded-lg flex items-center justify-center shadow-lg z-20 mt-16 border-blue-500/30">
                 <Cpu className="text-blue-500 mr-2" /> <span className="font-bold text-foreground">Rover Active</span>
               </div>
@@ -186,7 +195,7 @@ export default function Home() {
             <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">See the system working — live</h2>
             <p className="text-text-secondary text-lg">Simulated field data updates every 3 seconds.</p>
           </div>
-
+          
           <div className="max-w-6xl mx-auto glass-card rounded-2xl overflow-hidden flex flex-col md:flex-row h-[600px] shadow-2xl">
             <div className="w-full md:w-2/3 h-[300px] md:h-full relative">
               <MapPreview />
@@ -196,7 +205,7 @@ export default function Home() {
                 <span className="h-2.5 w-2.5 rounded-full bg-accent-green mr-3 animate-pulse-dot shadow-[0_0_10px_rgba(82,183,136,0.8)]"></span> 
                 Live Telemetry
               </h3>
-
+              
               <div className="space-y-5 mb-auto">
                 <div className="bg-card p-4 rounded-xl border border-border/50 text-sm flex justify-between items-center shadow-sm hover:shadow-md transition-shadow">
                   <span className="text-text-secondary font-medium">Drone D1 Status</span>
@@ -214,7 +223,7 @@ export default function Home() {
                   <span className="text-foreground font-semibold text-base">Early Blight — 94% conf.</span>
                 </div>
               </div>
-
+              
               <div className="mt-8">
                 <Link href="/dashboard" className="block w-full">
                   <Button className="w-full bg-accent-green text-white hover:bg-emerald-600 shadow-lg font-bold py-6">
@@ -229,3 +238,6 @@ export default function Home() {
     </div>
   );
 }
+""")
+
+print("Home page updated successfully.")
